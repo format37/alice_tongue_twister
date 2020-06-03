@@ -19,9 +19,9 @@ def handle_dialog(req, res):
 		user_text = req['request']['original_utterance']
 		user_text_clear = remove_punctuation(user_text)
 
-	if user_text == 'ping':
-		res['response']['text'] = 'Спасибо, я в порядке!'
-		return
+		if user_text == 'ping':
+			res['response']['text'] = 'Спасибо, я в порядке!'
+			return
 
 		#MySQL++
 		ServerName = 'localhost'
