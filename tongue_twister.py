@@ -7,10 +7,18 @@ import difflib
 
 sessionStorage = {}
 
-def handle_dialog(req, res):
-	#request	= req['request']
-	#command	= request['command']	
-	#res['response']['text']=command
+def handle_dialog(req, res):	
+	#test
+	ServerName = 'localhost'
+	Database = 'tongue_twister'
+	username = 'root'
+	password = ''
+	con = pymysql.connect(ServerName, username, password, Database)
+	with con:
+		cur = con.cursor()
+		query = "show tables;"
+		mysql_df = pd.read_sql(query, con=con)		
+	
 	res['response']['text'] = 'Спасибо, я в порядке!'
 	return
 	try:
