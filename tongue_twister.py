@@ -259,7 +259,8 @@ def handle_dialog(req, res):
 		#Возможно, нет соединения с Sql
 		res['response']['text'] = 'Вы попали на секретный уровень 0. Никому об этом не говорите!'
 		add_to_log(cur, user_id, menu_id, user_text, res['response']['text'])
-	except exception as e:
+	except Exception as e:
+		log_error(e)
 		res['response']['text'] = 'Простите, меня отвлекли. Так о чём мы говорили?'
 		#print(e.__class__)
 
