@@ -9,7 +9,7 @@ sessionStorage = {}
 
 def handle_dialog(req, res):	
 	#test
-	ServerName = 'localhost'
+	'''ServerName = 'localhost'
 	Database = 'tongue_twister'
 	username = 'root'
 	password = ''
@@ -18,7 +18,7 @@ def handle_dialog(req, res):
 		cur = con.cursor()
 		query = "show tables;"
 		mysql_df = pd.read_sql(query, con=con)		
-	
+	'''
 	res['response']['text'] = 'Спасибо, я в порядке!'
 	return
 
