@@ -19,8 +19,8 @@ def handle_dialog(req, res):
 		query = "show tables;"
 		mysql_df = pd.read_sql(query, con=con)		
 	'''
-	res['response']['text'] = 'Спасибо, я в порядке!'
-	return
+	#res['response']['text'] = 'Спасибо, я в порядке!'
+	#return
 
 	try:
 		user_id = req['session']['user_id']
