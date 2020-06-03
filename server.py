@@ -5,22 +5,21 @@ from aiohttp import web
 import ssl
 import firebase_admin
 from firebase_admin import credentials
+from tongue_twister import handle_dialog
 
 async def call_check(request):
 	return web.Response(text='ok',content_type="text/html")
 
 async def call_alice(request):
 	data = await request.json()
-	request	= data['request']
-	command	= request['command']	
 	response = {
         "version": data['version'],
         "session": data['session'],
         "response": {
             "end_session": False
         }
-    }		
-	response['response']['text']=command
+    }
+	handle_dialog(data,response)	
 	return web.json_response(response)
 
 app = web.Application()
