@@ -22,7 +22,7 @@ def handle_dialog(req, res):
 	#res['response']['text'] = 'Спасибо, я в порядке!'
 	#return
 
-	#try:
+	try:
 		user_id = req['session']['user_id']
 		
 		user_name = ''
@@ -259,12 +259,12 @@ def handle_dialog(req, res):
 		#Возможно, нет соединения с Sql
 		res['response']['text'] = 'Вы попали на секретный уровень 0. Никому об этом не говорите!'
 		add_to_log(cur, user_id, menu_id, user_text, res['response']['text'])
-	#except #exception as e:
+	except exception as e:
 		res['response']['text'] = 'Простите, меня отвлекли. Так о чём мы говорили?'
 		#print(e.__class__)
 
 def get_last_user_word(con,cur,user_id):
-	#try:
+	try:
 		query = "drop table if exists last cascade;"
 		cur.execute(query)
 		query = "create temporary table last select word_id,event_date,score from scores where user = '" + user_id + "' order by event_date desc limit 1;"
@@ -272,11 +272,12 @@ def get_last_user_word(con,cur,user_id):
 		query = "select words.word, words.id, last.score from words inner join last on words.id=last.word_id;"
 		mysql_df = pd.read_sql(query, con=con)
 		return mysql_df
-	#except #exception:
+	except Exception as e:
+		log_error(e)
 		return ''
 	
 def generate_word(cur,con,user_id,in_word_id):
-	#try:
+	try:
 		# Выберем случайную скороговорку
 		if in_word_id=='':
 			mysql_df = get_last_user_word(con, cur, user_id)
@@ -317,9 +318,13 @@ def generate_word(cur,con,user_id,in_word_id):
 		else:
 			# Похоже, каталог скороговорок пуст..
 			return 'Вы попали на секретный уровень 3. Никому об этом не говорите!'
-	#except #exception:
+	except Exception as e:
+		log_error(e)
 		return 'Вы попали на секретный уровень 5Д. Никому об этом не говорите!'
 
+def log_error(e):
+	print(e.__doc__)
+	
 def user_name_suggestions():
 	return [
 		"Железный дровосек",
@@ -328,13 +333,14 @@ def user_name_suggestions():
 	]
 
 def remove_punctuation(word):
-	#try:
+	try:
 		return word.translate({ord(c): None for c in ',.:-!?'}).lower()
-	#except #exception:
+	except Exception as e:
+		log_error(e)
 		return word
 	
 def menu_suggestions(menu_id,is_top):
-	#try:
+	try:
 		# Заполним структуру для всех пунктов меню
 		menu = ['' for i in range(0, 6)]
 
@@ -402,14 +408,16 @@ def menu_suggestions(menu_id,is_top):
 						menu[menu_n][answer_n][version_n] = remove_punctuation(menu[menu_n][answer_n][version_n])
 
 		return menu[menu_id]
-	#except #exception:
+	except Exception as e:
+		log_error(e)
 		return ["Выход"]
 	
 def add_to_log(cur,user,menu,text_in,text_out):
-	#try:
+	try:
 		query = "insert into log(user, menu, text_in, text_out, event_date) values('" + user + "', "+str(menu)+", '" + text_in + "', '" + text_out + "', '"+time.strftime('%Y-%m-%d %H:%M:%S')+"');"
 		cur.execute(query)
-	#except #exception:
+	except Exception as e:
+		log_error(e)
 		res='sad story'
 		
 def get_suggests(user_id):
