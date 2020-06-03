@@ -12,4 +12,4 @@ create table scores(id int not null auto_increment,user varchar(128) not null, w
 create table log(id int not null auto_increment,user varchar(128), menu int, text_in varchar(1024), text_out varchar(1024), event_date DATETIME, primary key(id));
 alter table log convert to character set utf8mb4 collate utf8mb4_unicode_ci;
 
-exit;
+exit

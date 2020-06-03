@@ -21,6 +21,7 @@ def handle_dialog(req, res):
 	
 	res['response']['text'] = 'Спасибо, я в порядке!'
 	return
+
 	try:
 		user_id = req['session']['user_id']
 		
