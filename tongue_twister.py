@@ -11,9 +11,11 @@ def handle_dialog(req, res):
 	#request	= req['request']
 	#command	= request['command']	
 	#res['response']['text']=command
+	res['response']['text'] = 'Спасибо, я в порядке!'
+	return
 	try:
 		user_id = req['session']['user_id']
-		return user_id
+		
 		user_name = ''
 		menu_id = 0
 		user_text = req['request']['original_utterance']
