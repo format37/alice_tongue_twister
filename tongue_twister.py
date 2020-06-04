@@ -23,6 +23,7 @@ def send_to_telegram(message):
 def handle_dialog(req, res):
 
 	try:
+		send_to_telegram('check')
 		user_id = req['session']['user_id']
 
 		user_name = ''
@@ -328,8 +329,8 @@ def generate_word(cur,con,user_id,in_word_id):
 		return 'Вы попали на секретный уровень 5Д. Никому об этом не говорите!'
 
 def log_error(level,e):
-	#print(e.__doc__)
-	send_to_telegram(str(level)+': '+str(e.__doc__))
+	print(e.__doc__)
+	#send_to_telegram(str(level)+': '+str(e.__doc__))
 	
 def user_name_suggestions():
 	return [
