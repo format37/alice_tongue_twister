@@ -22,8 +22,7 @@ def send_to_telegram(message):
 
 def handle_dialog(req, res):
 
-	try:
-		send_to_telegram('check')
+	try:		
 		user_id = req['session']['user_id']
 
 		user_name = ''
@@ -330,7 +329,7 @@ def generate_word(cur,con,user_id,in_word_id):
 
 def log_error(level,e):
 	print(e.__doc__)
-	#send_to_telegram(str(level)+': '+str(e.__doc__))
+	send_to_telegram(level)
 	
 def user_name_suggestions():
 	return [
