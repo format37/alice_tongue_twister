@@ -1,3 +1,4 @@
+#!/usr/bin/env python3
 import pymysql.cursors
 import pandas as pd
 import time
