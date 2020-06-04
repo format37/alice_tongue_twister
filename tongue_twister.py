@@ -31,12 +31,10 @@ def handle_dialog(req, res):
 		cur = con.cursor()
 		query = "select name,menu_id from users where user='"+user_id+"';"
 		mysql_df = pd.read_sql(query, con=con)
-		if len(mysql_df)>0:
+		if len(mysql_df)>0:			
 			
-			print('mysql',mysql_df.loc[0].values[0])
-			exit()
-			
-			user_name   = mysql_df.loc[0].values[0].decode('utf8')
+			#user_name   = mysql_df.loc[0].values[0].decode('utf8')
+			user_name   = mysql_df.loc[0].values[0]
 			menu_id     = int(mysql_df.loc[0].values[1])
 
 		if user_text_clear == 'выход':
@@ -105,7 +103,8 @@ def handle_dialog(req, res):
 				mysql_df = pd.read_sql(query, con=con)
 				if len(mysql_df) > 0:
 					lid_id      = str(mysql_df.loc[0].values[0])
-					lid_name    = str(mysql_df.loc[0].values[1]).decode('utf8')
+					#lid_name    = str(mysql_df.loc[0].values[1]).decode('utf8')
+					lid_name    = str(mysql_df.loc[0].values[1])
 					lid_score   = str(int(mysql_df.loc[0].values[2]))
 					if lid_id==user_id:
 						stats += ' Вы - лидер!'
@@ -197,7 +196,8 @@ def handle_dialog(req, res):
 			# Определим последнюю скороговорку пользователя
 			mysql_df=get_last_user_word(con,cur,user_id)
 			if len(mysql_df) > 0:
-				word = mysql_df.loc[0].values[0].decode('utf8')
+				#word = mysql_df.loc[0].values[0].decode('utf8')
+				word = mysql_df.loc[0].values[0]
 				word_id = str(mysql_df.loc[0].values[1])
 				last_score = int(mysql_df.loc[0].values[2])
 				# Оценим ответ пользователя
@@ -285,7 +285,8 @@ def generate_word(cur,con,user_id,in_word_id):
 		mysql_df = pd.read_sql(query, con=con)
 		if len(mysql_df) > 0:
 			word_id = str(mysql_df.loc[0].values[0])
-			word = mysql_df.loc[0].values[1].decode('utf8')
+			#word = mysql_df.loc[0].values[1].decode('utf8')
+			word = mysql_df.loc[0].values[1]
 
 			# Проверим, имеются ли очки у пользователя по данной скороговорке
 			query = "select score from scores where user='" + user_id + "' and word_id = " + word_id + ";"
