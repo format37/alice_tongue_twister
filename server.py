@@ -7,6 +7,8 @@ import firebase_admin
 from firebase_admin import credentials
 from tongue_twister import handle_dialog
 
+local_path	= '/home/format37_gmail_com/projects/alice_tongue_twister/'
+
 async def call_check(request):
 	return web.Response(text='ok',content_type="text/html")
 
@@ -27,8 +29,8 @@ app.router.add_route('GET', '/check', call_check)
 app.router.add_route('POST', '/alice', call_alice, expect_handler = web.Request.json)
 
 ssl_context = ssl.create_default_context(ssl.Purpose.CLIENT_AUTH)
-ssl_context.load_cert_chain('cert/fullchain.pem', 'cert/privkey.pem')
-cred = credentials.Certificate("cert/cert.json")
+ssl_context.load_cert_chain(local_path+'cert/fullchain.pem', local_path+'cert/privkey.pem')
+cred = credentials.Certificate(local_path+"cert/cert.json")
 firebase_admin.initialize_app(cred)
 
 loop = asyncio.get_event_loop()
