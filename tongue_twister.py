@@ -32,6 +32,10 @@ def handle_dialog(req, res):
 		query = "select name,menu_id from users where user='"+user_id+"';"
 		mysql_df = pd.read_sql(query, con=con)
 		if len(mysql_df)>0:
+			
+			print('mysql',mysql_df.loc[0].values[0])
+			exit()
+			
 			user_name   = mysql_df.loc[0].values[0].decode('utf8')
 			menu_id     = int(mysql_df.loc[0].values[1])
 
