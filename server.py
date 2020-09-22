@@ -7,7 +7,7 @@ import firebase_admin
 from firebase_admin import credentials
 from tongue_twister import handle_dialog
 
-local_path	= '/home/format37_gmail_com/projects/alice_tongue_twister/'
+#local_path	= '/home/format37_gmail_com/projects/alice_tongue_twister/'
 cert_pub	= '/home/format37_gmail_com/cert/fullchain.pem'
 cert_key	= '/home/format37_gmail_com/cert/privkey.pem'
 
