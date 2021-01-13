@@ -49,6 +49,7 @@ def check_sql():
 			else:
 				return 'empty'
 	except Exception as e:
+		log_error('generate_word', e)
 		return 'my error: '+str(e)
 
 def handle_dialog(req, res):
@@ -75,6 +76,9 @@ def handle_dialog(req, res):
 		with con:
 			cur = con.cursor()
 			query = "select name,menu_id from users where user='"+user_id+"';"
+			# debug ++
+			print(query)
+			# debug --
 			mysql_df = pd.read_sql(query, con=con)
 			if len(mysql_df)>0:			
 
@@ -294,6 +298,7 @@ def handle_dialog(req, res):
 			return
 		#Возможно, нет соединения с Sql
 		res['response']['text'] = 'Вы попали на секретный уровень 0. Никому об этом не говорите!'
+		log_error('handle_dialog nothing_happenes', 'e')
 		add_to_log(cur, user_id, menu_id, user_text, res['response']['text'])
 	except Exception as e:
 		log_error('handle_dialog',e)
