@@ -331,7 +331,9 @@ def generate_word(cur,con,user_id,in_word_id):
 		else:
 			# Выберем указанную скороговорку
 			query = "select id,word from words where id="+in_word_id+";"
-
+		# debug ++
+		print(query)
+		# debug --
 		mysql_df = pd.read_sql(query, con=con)
 		if len(mysql_df) > 0:
 			word_id = str(mysql_df.loc[0].values[0])
