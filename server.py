@@ -11,7 +11,7 @@ cert_key	= '/etc/letsencrypt/live/www.icebergservice.space/privkey.pem'
 
 async def call_check(request):
 	check_result = str(check_sql())
-	send_to_telegram(check_result)
+	# send_to_telegram(check_result)
 	return web.Response(text='last event: ' + check_result, content_type="text/html")
 
 async def call_alice(request):
