@@ -273,7 +273,7 @@ def handle_dialog(req, res):
 					# menu: 5 - Повторим, или продолжим
 					query = "update users set menu_id = 5 where user ='" + user_id + "';"
 					cur.execute(query)
-					#cur.commit()
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(menu_suggestions(5,True)[0]),  # Повторим
