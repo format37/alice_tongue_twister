@@ -26,7 +26,7 @@ def auth_sql():
 	ServerName = 'localhost'
 	Database = 'fastwords'
 	username = 'python'
-	with open('mysql.pass', 'r') as file:
+	with open('/mnt/storage/share/alex/projects/alice_tongue_twister/mysql.pass', 'r') as file:
 		password = file.read().replace('\n', '')
 		file.close()
 	return ServerName, Database, username, password
