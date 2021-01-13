@@ -72,7 +72,8 @@ def handle_dialog(req, res):
 		host=ServerName,
 		user=username,
 		passwd=password,
-		db=Database
+		db=Database,
+		autocommit=True
 	)
 	with con:
 		cur = con.cursor()
