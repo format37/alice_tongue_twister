@@ -23,9 +23,9 @@ def send_to_telegram(message):
 
 def auth_sql():
 
-	ServerName = '192.168.1.11'
+	ServerName = 'localhost'
 	Database = 'fastwords'
-	username = 'root'
+	username = 'python'
 	with open('mysql.pass', 'r') as file:
 		password = file.read().replace('\n', '')
 		file.close()
