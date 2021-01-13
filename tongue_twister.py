@@ -22,23 +22,35 @@ def send_to_telegram(message):
 	return requests.get(url,headers = headers)
 
 def auth_sql():
+
 	ServerName = 'localhost'
 	Database = 'fastwords'
 	username = 'root'
-	with open(self.script_path + 'mysql.pass', 'r') as file:
+	with open('mysql.pass', 'r') as file:
 		password = file.read().replace('\n', '')
 		file.close()
 	return ServerName, Database, username, password
 
 def check_sql():
-	ServerName, Database, username, password = auth_sql()
-	con = pymysql.connect(ServerName, username, password, Database)
-	with con:
-		#cur = con.cursor()
-		query = "select event_date from log limit 1;"
-		mysql_df = pd.read_sql(query, con=con)
-		if len(mysql_df) > 0:
-			return mysql_df.loc[0].values[0]
+	try:
+		ServerName, Database, username, password = auth_sql()
+		#con = pymysql.connect(ServerName, username, password, Database)
+		con = pymysql.connect(
+			host=ServerName,
+			user=username,
+			passwd=password,
+			db=Database
+		)
+		with con:
+			#cur = con.cursor()
+			query = "select event_date from log limit 1;"
+			mysql_df = pd.read_sql(query, con=con)
+			if len(mysql_df) > 0:
+				return mysql_df.loc[0].values[0]
+			else:
+				return 'empty'
+	except Exception as e:
+		return 'my error: '+str(e)
 
 def handle_dialog(req, res):
 
@@ -62,7 +74,13 @@ def handle_dialog(req, res):
 			password = file.read().replace('\n', '')
 			file.close()"""
 		ServerName, Database, username, password = auth_sql()
-		con = pymysql.connect(ServerName, username, password, Database)
+		#con = pymysql.connect(ServerName, username, password, Database)
+		con = pymysql.connect(
+			host=ServerName,
+			user=username,
+			passwd=password,
+			db=Database
+		)
 		with con:
 			cur = con.cursor()
 			query = "select name,menu_id from users where user='"+user_id+"';"
