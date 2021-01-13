@@ -332,7 +332,7 @@ def generate_word(cur,con,user_id,in_word_id):
 			# Выберем указанную скороговорку
 			query = "select id,word from words where id="+in_word_id+";"
 		# debug ++
-		print(query)
+		# print(query)
 		# debug --
 		mysql_df = pd.read_sql(query, con=con)
 		if len(mysql_df) > 0:
@@ -356,6 +356,9 @@ def generate_word(cur,con,user_id,in_word_id):
 
 			# menu: 4 - Ждем скороговорку, в исполнении пользователя
 			query = "update users set menu_id = 4 where user ='" + user_id + "';"
+			# debug ++
+			print(query)
+			# debug --
 			cur.execute(query)
 			return word
 
