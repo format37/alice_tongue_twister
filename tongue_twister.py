@@ -34,7 +34,6 @@ def auth_sql():
 def check_sql():
 	try:
 		ServerName, Database, username, password = auth_sql()
-		#con = pymysql.connect(ServerName, username, password, Database)
 		con = pymysql.connect(
 			host=ServerName,
 			user=username,
@@ -43,7 +42,7 @@ def check_sql():
 		)
 		with con:
 			#cur = con.cursor()
-			query = "select event_date from log limit 1;"
+			query = "select event_date from log order by event_date desc limit 1;"
 			mysql_df = pd.read_sql(query, con=con)
 			if len(mysql_df) > 0:
 				return mysql_df.loc[0].values[0]
@@ -66,15 +65,7 @@ def handle_dialog(req, res):
 			res['response']['text'] = 'Спасибо, я в порядке!'
 			return
 
-		#MySQL++
-		"""ServerName = 'localhost'
-		Database = 'fastwords'
-		username = 'root'
-		with open(self.script_path + 'mysql.pass', 'r') as file:
-			password = file.read().replace('\n', '')
-			file.close()"""
 		ServerName, Database, username, password = auth_sql()
-		#con = pymysql.connect(ServerName, username, password, Database)
 		con = pymysql.connect(
 			host=ServerName,
 			user=username,

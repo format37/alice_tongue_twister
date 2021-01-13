@@ -3,14 +3,16 @@ PORT = '8081' #prod
 import asyncio
 from aiohttp import web
 import ssl
-from tongue_twister import handle_dialog, check_sql
+from tongue_twister import handle_dialog, check_sql, send_to_telegram
 
 # run service as root
 cert_pub	= '/etc/letsencrypt/live/www.icebergservice.space/fullchain.pem'
 cert_key	= '/etc/letsencrypt/live/www.icebergservice.space/privkey.pem'
 
 async def call_check(request):
-	return web.Response(text='ok ' + str(check_sql()), content_type="text/html")
+	check_result = str(check_sql())
+	send_to_telegram(check_result)
+	return web.Response(text='last event: ' + check_result, content_type="text/html")
 
 async def call_alice(request):
 	data = await request.json()
