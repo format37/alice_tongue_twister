@@ -122,6 +122,7 @@ def handle_dialog(req, res):
 						if int(mysql_df.loc[0].values[0])==0:
 							query = "insert into users(user, name, menu_id) values('"+user_id+"','',1);"
 							cur.execute(query)
+							cur.commit()
 					else:
 						# Может таблица пользователей пуста..
 						res['response']['text'] = 'Вы попали на секретный уровень 0. Никому об этом не говорите!'
@@ -163,6 +164,7 @@ def handle_dialog(req, res):
 					# menu: 3 - Играем или выход
 					query = "update users set menu_id = 3 where user ='" + user_id + "';"
 					cur.execute(query)
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(menu_suggestions(3,True)[0]),  # Да
@@ -179,6 +181,7 @@ def handle_dialog(req, res):
 				# menu: 2 - Подтверждение имени
 				query = "update users set menu_id = 2, name = '"+user_name+"' where user ='"+user_id+"';"
 				cur.execute(query)
+				cur.commit()
 				sessionStorage[user_id] = {
 					'suggests': [
 						random.choice(menu_suggestions(2,True)[0]),  # Да
@@ -196,6 +199,7 @@ def handle_dialog(req, res):
 					# menu: 3 - Играем или нет
 					query = "update users set menu_id = 3 where user ='" + user_id + "';"
 					cur.execute(query)
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(menu_suggestions(3,True)[0]),  # Да
@@ -209,6 +213,7 @@ def handle_dialog(req, res):
 					res['response']['text'] = 'Как тогда мне Вас называть?'
 					query = "update users set menu_id = 1 where user ='" + user_id + "';"
 					cur.execute(query)
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(user_name_suggestions())
@@ -228,6 +233,7 @@ def handle_dialog(req, res):
 					# menu: 3 - Играем или выход
 					query = "update users set menu_id = 3 where user ='" + user_id + "';"
 					cur.execute(query)
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(menu_suggestions(3, True)[0]),  # Да
@@ -255,6 +261,7 @@ def handle_dialog(req, res):
 					# Поместим оценку в БД
 					query = "update scores set score="+str(score)+", event_date='"+time.strftime('%Y-%m-%d %H:%M:%S')+"' where user = '"+user_id+"' and word_id = "+word_id+";"
 					cur.execute(query)
+					cur.commit()
 					# Сообщение пользователю
 					addition=''
 					if last_score<score and last_score>0:
@@ -265,6 +272,7 @@ def handle_dialog(req, res):
 					# menu: 5 - Повторим, или продолжим
 					query = "update users set menu_id = 5 where user ='" + user_id + "';"
 					cur.execute(query)
+					cur.commit()
 					sessionStorage[user_id] = {
 						'suggests': [
 							random.choice(menu_suggestions(5,True)[0]),  # Повторим
@@ -349,10 +357,12 @@ def generate_word(cur,con,user_id,in_word_id):
 				query = "update scores set event_date='" + time.strftime(
 					'%Y-%m-%d %H:%M:%S') + "' where user = '" + user_id + "' and word_id = " + word_id + ";"
 				cur.execute(query)
+				cur.commit()
 			else:  # Решает эту скороговорку впервые
 				query = "insert into scores(user,word_id,score,event_date) values ('" + user_id + "'," + word_id + ",0,'" + time.strftime(
 					'%Y-%m-%d %H:%M:%S') + "');"
 				cur.execute(query)
+				cur.commit()
 
 			# menu: 4 - Ждем скороговорку, в исполнении пользователя
 			query = "update users set menu_id = 4 where user ='" + user_id + "';"
@@ -360,6 +370,7 @@ def generate_word(cur,con,user_id,in_word_id):
 			print(query)
 			# debug --
 			cur.execute(query)
+			cur.commit()
 			return word
 
 		else:
@@ -464,6 +475,7 @@ def add_to_log(cur,user,menu,text_in,text_out):
 	try:
 		query = "insert into log(user, menu, text_in, text_out, event_date) values('" + user + "', "+str(menu)+", '" + text_in + "', '" + text_out + "', '"+time.strftime('%Y-%m-%d %H:%M:%S')+"');"
 		cur.execute(query)
+		cur.commit()
 	except Exception as e:
 		log_error('add_to_log',e)
 		res='sad story'
