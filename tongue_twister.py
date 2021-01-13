@@ -39,7 +39,9 @@ def handle_dialog(req, res):
 		ServerName = 'localhost'
 		Database = 'fastwords'
 		username = 'root'
-		password = ''
+		with open(self.script_path + 'mysql.pass', 'r') as file:
+			password = file.read().replace('\n', '')
+			file.close()
 		con = pymysql.connect(ServerName, username, password, Database)
 		with con:
 			cur = con.cursor()
