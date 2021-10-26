@@ -6,8 +6,8 @@ import ssl
 from tongue_twister import handle_dialog, check_sql, send_to_telegram
 
 # run service as root
-cert_pub	= '/etc/letsencrypt/live/www.icebergservice.space/fullchain.pem'
-cert_key	= '/etc/letsencrypt/live/www.icebergservice.space/privkey.pem'
+cert_pub        = '/etc/letsencrypt/live/www.langtea.club/fullchain.pem'
+cert_key        = '/etc/letsencrypt/live/www.langtea.club/privkey.pem'
 
 async def call_check(request):
 	check_result = str(check_sql())
